@@ -1,3 +1,6 @@
 [submodule "orderly-web"]
 	path = orderly-web
 	url = https://github.com/diegodevitte/orderly-web.git
+[submodule "orderly-microservice-auth"]
+	path = orderly-microservice-auth
+	url = https://github.com/diegodevitte/orderly-microservice-auth.git
