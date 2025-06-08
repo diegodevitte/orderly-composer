@@ -27,12 +27,23 @@ fi
 echo "🔁 Inicializando submódulos..."
 git submodule update --init --recursive
 
-echo "📦 Instalando dependencias Node.js en submódulos..."
+echo "📦 Instalando dependencias y actualizando ramas en submódulos..."
 
 for dir in */ ; do
   if [ -f "$dir/package.json" ]; then
-    echo "📁 Instalando en $dir"
-    (cd "$dir" && npm install)
+    echo "📁 Procesando $dir"
+
+    ( 
+      cd "$dir"
+
+      # Si es repo git, aseguramos que esté en main y actualizado
+      if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        git checkout main || echo "⚠️ No se pudo cambiar a 'main' en $dir"
+        git pull origin main || echo "⚠️ No se pudo hacer pull en $dir"
+      fi
+
+      npm install
+    )
   fi
 done
 
