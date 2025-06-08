@@ -1,0 +1,18 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Node (por si hay scripts globales)
+node_modules/
+npm-debug.log*
+
+# Logs o builds temporales
+*.log
+*.out
+
+# IDEs
+.vscode/
+.idea/
+
+# Entornos
+.env
