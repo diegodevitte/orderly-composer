@@ -3,17 +3,38 @@
 Thumbs.db
 *.log
 
-# Node (por si hay scripts en bash o JS)
+# Node (por si hay scripts en JS o TypeScript)
 node_modules/
 npm-debug.log*
+yarn-debug.log*
+*.tsbuildinfo
 
-# Env
+# Env files
 .env
+.env.local
+.env.*.local
 
 # Docker
 *.env
 *.tar
+docker-compose.override.yml
 
-# IDEs
+# Submódulos y Git
+.gitmodules
+*.swp
+*.bak
+
+# IDEs / editores
 .vscode/
 .idea/
+*.sublime*
+
+# Build / cache
+dist/
+build/
+coverage/
+logs/
+
+# Bash / scripts temporales
+*.sh~
+*.bak

@@ -1,64 +1,69 @@
 # 🧩 Orderly Composer
 
-Este repositorio es el módulo principal de la plataforma **Orderly**, una arquitectura basada en microservicios y aplicaciones frontend para gestionar pedidos en tiendas locales.
+Este repositorio es el **módulo principal** de la plataforma **Orderly**, una arquitectura basada en microservicios y frontends desacoplados para gestionar pedidos en tiendas locales.
 
-Orquesta múltiples servicios y frontends usando **Docker**, **submódulos Git** y configuración centralizada.
+Coordina múltiples servicios y aplicaciones usando **Docker**, **Git submodules**, y una configuración centralizada.
 
 ---
 
-## ✅ Requisitos para desarrollar
+## ✅ Requisitos para desarrollo
 
-Asegurate de tener instalado:
+Antes de comenzar, asegurate de tener instaladas las siguientes herramientas en tu máquina:
 
-- Git
-- Node.js (versión 20 o superior)
-- Docker Desktop (con Docker Compose incluido)
-- En Windows: tener habilitado WSL2 y la Plataforma de Máquina Virtual
+- [Git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/) (v20 o superior)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- Docker Compose (incluido con Docker Desktop)
+- **En Windows**:
+  - Tener habilitado **WSL2**
+  - Activar la opción **"Plataforma de Máquina Virtual"**
+  - Ver guía: https://aka.ms/enablevirtualization
 
 ---
 
 ## 🚀 Instalación rápida
 
-1. Cloná este repositorio con submódulos:
+Cloná este repositorio con los submódulos y levantá todo con un solo comando:
 
 ```bash
 git clone --recurse-submodules https://github.com/diegodevitte/orderly-composer.git
 cd orderly-composer
-```
-
-2. Dale permisos de ejecución al script (solo Linux/macOS/WSL):
-
-```bash
 chmod +x setup.sh
-```
-
-3. Ejecutá el script:
-
-```bash
 ./setup.sh
 ```
-
-> En Windows podés usar Git Bash o WSL para ejecutar el script. (Próximamente: versión `.bat`)
 
 ---
 
 ## 🧠 ¿Qué hace `setup.sh`?
 
-- Actualiza y clona todos los submódulos
-- Instala dependencias (`npm install`) en cada subproyecto Node.js
-- Construye los contenedores Docker
-- Levanta la plataforma con `docker compose`
+Este script automatiza todo el flujo de instalación y ejecución de Orderly:
+
+1. 🔥 Elimina contenedores, imágenes, redes y volúmenes **relacionados con Orderly**.
+2. 🔁 Inicializa los submódulos (`git submodule update --init --recursive`).
+3. 📦 Ejecuta `npm install` en todos los submódulos que tengan `package.json`.
+4. 🐳 Construye los contenedores con Docker.
+5. 🚀 Levanta toda la plataforma con `docker compose up`.
 
 ---
 
-## 📦 Estructura del proyecto
+## 🧼 Modo limpieza solamente
+
+Si solo querés limpiar todos los contenedores, imágenes, volúmenes y redes relacionadas con Orderly sin levantar nada, podés usar:
+
+```bash
+./setup.sh --clean-only
+```
+
+---
+
+## 🧱 Estructura del proyecto
 
 ```
 orderly-composer/
-├── docker-compose.yml               # Orquestador de contenedores
+├── docker-compose.yml               # Orquestador de todos los servicios
+├── setup.sh                         # Script de setup y limpieza
 ├── README.md                        # Este archivo
-├── setup.sh                         # Script de instalación automatizada
-├── orderly-web/                     # Frontend web en Next.js
+├── orderly-web/                     # Frontend web (Next.js)
 ├── orderly-microservice-auth/      # Microservicio de autenticación (Fastify + JWT)
 └── ...                              # Otros microservicios y apps
 ```
@@ -72,32 +77,23 @@ orderly-composer/
 
 ---
 
-## 📤 Clonar en otra máquina
+## 🔄 Trabajando con submódulos
+
+Cuando hacés cambios dentro de un submódulo:
 
 ```bash
-git clone --recurse-submodules https://github.com/diegodevitte/orderly-composer.git
-cd orderly-composer
-chmod +x setup.sh
-./setup.sh
+cd orderly-web       # O cualquier submódulo
+git commit -m "Cambios locales"
+git push
+
+cd ..
+git add orderly-web  # Actualizás la referencia del submódulo
+git commit -m "Update submodule reference"
+git push
 ```
 
 ---
 
-## 🛠 Modo desarrollo con submódulos
+## 🛠 Contribución
 
-Para trabajar en un submódulo:
-
-```bash
-cd orderly-web  # o cualquier otro
-git commit -m "Cambios"
-git push
-```
-
-Luego actualizá la referencia en el módulo principal:
-
-```bash
-cd ..
-git add orderly-web
-git commit -m "Update submodule reference"
-git push
-```
+Este repositorio es parte de un ecosistema de servicios desacoplados. Cada submódulo se puede desarrollar y testear por separado, pero el módulo principal (`orderly-composer`) sirve como entorno de integración completo.

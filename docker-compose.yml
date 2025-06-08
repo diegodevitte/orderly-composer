@@ -1,8 +1,26 @@
+version: '3.8'
+
 services:
   orderly-web:
     build:
       context: ./orderly-web
+    container_name: orderly-web
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
+    restart: unless-stopped
+    volumes:
+      - ./orderly-web:/app
+      - /app/node_modules
+
+  orderly-microservice-auth:
+    build:
+      context: ./orderly-microservice-auth
+    container_name: orderly-auth
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+    env_file:
+      - ./orderly-microservice-auth/.env
+    volumes:
+      - ./orderly-microservice-auth:/app
+      - /app/node_modules
