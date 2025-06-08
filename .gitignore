@@ -1,18 +1,19 @@
-# Sistema
+# General
 .DS_Store
 Thumbs.db
+*.log
 
-# Node (por si hay scripts globales)
+# Node (por si hay scripts en bash o JS)
 node_modules/
 npm-debug.log*
 
-# Logs o builds temporales
-*.log
-*.out
+# Env
+.env
+
+# Docker
+*.env
+*.tar
 
 # IDEs
 .vscode/
 .idea/
-
-# Entornos
-.env
